@@ -21,9 +21,7 @@ exports.screenshot = async (req, res) => {
     const height = req.query.height ? parseInt(req.query.height, 10) : 800;
   
     if(!browser) {
-        browser = await puppeteer.launch({
-            args: ['--no-sandbox']
-        });
+        browser = await puppeteer.launch();
     }
     if(!page) {
         page = await browser.newPage();

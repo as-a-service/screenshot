@@ -8,10 +8,13 @@ RUN apt-get update && \
     libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 \
     ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
 
+RUN groupadd -r chrome && useradd --no-log-init -r -g chrome chrome
+
 # Start the app
 WORKDIR /usr/src/app
 COPY package*.json ./
 ENV NODE_ENV=production
 RUN npm install --production
 COPY . .
+USER chrome
 CMD [ "npm", "start" ]
