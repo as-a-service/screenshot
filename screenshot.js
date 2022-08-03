@@ -28,10 +28,20 @@ exports.screenshot = async (req, res) => {
     }
 
     await page.setViewport({width, height});
-    await page.goto(url);
-    const imageBuffer = await page.screenshot();
+    try {
+        await page.goto(url);
+    } catch(e) {
+        return res.send('Unable to open page');
+    }
+
+    let imageBuffer
+    try {
+        imageBuffer = await page.screenshot();
+    } catch(e) {
+        return res.send('Unable to take screenshot');
+    }
   
     res.set('Content-Type', 'image/png');
-    res.send(imageBuffer);
+    return res.send(imageBuffer);
   };
   
